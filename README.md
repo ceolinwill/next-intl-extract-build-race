@@ -1,6 +1,6 @@
 # next-intl Extraction Build Race Reproduction
 
-Minimal reproduction for `next build` now and then shipping message keys instead of text when next-intl's `experimental.extract` is on.
+Minimal reproduction for `next build` now and then shipping message keys instead of text when next-intl's `experimental.extract` is on. Reported in https://github.com/amannn/next-intl/issues/2441.
 
 During `next build`, next-intl starts message extraction without waiting for it and rewrites every catalog with `fs.writeFile`, even when nothing changed. `fs.writeFile` empties the file before it writes the new content. The same build reads those catalogs to compile them (`messages.precompile`), so a build that reads one inside that window compiles an empty catalog: the build passes, and its pages show message keys.
 
